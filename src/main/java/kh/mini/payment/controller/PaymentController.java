@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/payment")
 public class PaymentController {
 
-    @GetMapping("/add")
+    @GetMapping("")
     private String testToken() {
         return "Success";
     }

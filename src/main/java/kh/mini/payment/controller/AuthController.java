@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -42,7 +42,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginData loginData) {
 
         Authentication authentication = authenticationManager.authenticate(

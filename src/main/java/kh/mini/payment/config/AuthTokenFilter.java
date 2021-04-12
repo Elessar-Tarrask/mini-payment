@@ -1,6 +1,7 @@
 package kh.mini.payment.config;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import kh.mini.payment.services.JwtBlackListService;
 import kh.mini.payment.services.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
 
     @Autowired
+    private JwtBlackListService jwtBlackListService;
+
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
@@ -33,7 +37,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+
+            if (StringUtils.hasText(jwt) && jwtBlackListService.checkIfTokenInBlackList(jwt)) {
+                logger.error("Token in Black List");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
+                return;
+            }
+
+            if (jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
