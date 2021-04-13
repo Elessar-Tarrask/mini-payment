@@ -15,6 +15,6 @@ public class AuthenticationSuccessEventListener
     private LoginAttemptService loginAttemptService;
 
     public void onApplicationEvent(AuthenticationSuccessEvent e) {
-        loginAttemptService.loginFailed(e.getAuthentication().getName());
+        loginAttemptService.loginSucceeded(e.getAuthentication().getName());
     }
 }

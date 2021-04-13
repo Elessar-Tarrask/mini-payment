@@ -1,4 +1,4 @@
-package kh.mini.payment.config.exception;
+package kh.mini.payment.exception;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

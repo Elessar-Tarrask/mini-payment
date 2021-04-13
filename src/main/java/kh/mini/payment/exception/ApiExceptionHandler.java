@@ -1,4 +1,4 @@
-package kh.mini.payment.config.exception;
+package kh.mini.payment.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
