@@ -27,7 +27,6 @@ public class CustomLogoutSuccessHandler extends
             throws IOException, ServletException {
 
         String jwt = parseJwt(request);
-        System.out.println(jwt);
         if (jwt != null) {
             request.getSession().invalidate();
             if (!jwtBlackListService.checkIfTokenInBlackList(jwt))

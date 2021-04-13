@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,5 +33,12 @@ public class User extends CommonAbstractEntity {
     public User(String username, String password) {
         this.password = password;
         this.username = username;
+        this.wallet = new Wallet();
+        this.wallet.setCurrency(Currency.USD);
+        this.wallet.setAmount(BigDecimal.valueOf(8.0));
+        this.wallet.setTransactions(new ArrayList<>());
     }
+
+    @JsonIgnore
+    private Wallet wallet;
 }

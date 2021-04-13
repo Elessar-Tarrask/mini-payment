@@ -6,8 +6,8 @@ import kh.mini.payment.dto.SignUpData;
 import kh.mini.payment.entity.ERole;
 import kh.mini.payment.entity.Role;
 import kh.mini.payment.entity.User;
-import kh.mini.payment.repo.RoleRepository;
-import kh.mini.payment.repo.UserRepository;
+import kh.mini.payment.repo.RoleRepo;
+import kh.mini.payment.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -31,10 +29,10 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    UserRepo userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleRepo roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -42,7 +40,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("login")
+    @PostMapping(path = "login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginData loginData) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -65,7 +63,6 @@ public class AuthController {
         // Create new user's account
         User user = new User(signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()));
-
 
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName(ERole.ROLE_USER)

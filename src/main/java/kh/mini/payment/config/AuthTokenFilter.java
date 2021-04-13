@@ -37,7 +37,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-
             if (StringUtils.hasText(jwt) && jwtBlackListService.checkIfTokenInBlackList(jwt)) {
                 logger.error("Token in Black List");
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
